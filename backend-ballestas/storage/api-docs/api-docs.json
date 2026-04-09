@@ -1,0 +1,309 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API REST - Ballestas Beni",
+        "description": "Documentación oficial de la API para el TFG",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/api/registro": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Registra un nuevo usuario normal (No Admin)",
+                "operationId": "cf30eb53d5e1b5db23fca4bb9068a3f8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Taller Hermanos"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "taller@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario registrado con éxito"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Inicia sesión y obtiene el Token",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@ballestasbeni.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "admin123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login exitoso"
+                    },
+                    "401": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Cierra sesión y destruye el Token",
+                "operationId": "ad65cbbd4e9f201619eae184a5961a98",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/categorias": {
+            "get": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Obtiene la lista de todas las categorías",
+                "operationId": "684188b8d25abcad5e1c8a786226c02b",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    }
+                }
+            }
+        },
+        "/api/marcas": {
+            "get": {
+                "tags": [
+                    "Marcas"
+                ],
+                "summary": "Obtiene todas las marcas",
+                "operationId": "cdf1f15837825105957dc1b6581c9377",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    }
+                }
+            }
+        },
+        "/api/contacto": {
+            "get": {
+                "tags": [
+                    "Contacto"
+                ],
+                "summary": "Obtiene todos los mensajes (Para el panel de Admin)",
+                "operationId": "22762978795d38407143e573f3b0b5a1",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Contacto"
+                ],
+                "summary": "Envía un nuevo mensaje desde la web",
+                "operationId": "5df25f3680daea061a79117764f428aa",
+                "responses": {
+                    "201": {
+                        "description": "Mensaje enviado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/productos": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Obtiene el catálogo completo",
+                "operationId": "70a301af8ea04ce2f2596a58758632cd",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Crea un nuevo producto",
+                "operationId": "4ff8851cb6bfe92aa226cdc804917ff0",
+                "responses": {
+                    "201": {
+                        "description": "Producto creado"
+                    }
+                }
+            }
+        },
+        "/api/productos/destacados": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Obtiene los productos destacados",
+                "operationId": "5754f171fc8a68703715bec280c462bf",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    }
+                }
+            }
+        },
+        "/api/productos/{id}": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Busca un producto por su ID",
+                "operationId": "1884f1fc784a80f4976ac9c8d4ce887b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del producto",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Actualiza un producto existente",
+                "operationId": "20275afdbab1759ad2d46f3dcfbeaeeb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del producto",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto actualizado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Borra un producto",
+                "operationId": "ea733033fbff1681e04f8c4d0e11e0bc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del producto",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto eliminado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Autenticación",
+            "description": "Autenticación"
+        },
+        {
+            "name": "Categorías",
+            "description": "Categorías"
+        },
+        {
+            "name": "Marcas",
+            "description": "Marcas"
+        },
+        {
+            "name": "Contacto",
+            "description": "Contacto"
+        },
+        {
+            "name": "Productos",
+            "description": "Productos"
+        }
+    ]
+}
