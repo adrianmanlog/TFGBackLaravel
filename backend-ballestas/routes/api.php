@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CategoriaController;
 use App\Http\Controllers\Api\MarcaController;
 use App\Http\Controllers\Api\MensajeContactoController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PedidoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,16 @@ use App\Http\Controllers\Api\AuthController;
 */
 
 // Categorías y Marcas
+// Categorías y Marcas
 Route::get('/categorias', [CategoriaController::class, 'index']);
-Route::get('/marcas', [MarcaController::class, 'index']);
+Route::post('/categorias', [CategoriaController::class, 'store']); // <-- NUEVA
 
+Route::post('/procesar-pago', [PedidoController::class, 'procesarPago']);
+Route::get('/marcas', [MarcaController::class, 'index']);
+Route::post('/marcas', [MarcaController::class, 'store']); // <-- NUEVA
+Route::get('/usuarios/{id}/pedidos', [PedidoController::class, 'misPedidos']);
+Route::get('/pedidos/{id}/factura', [PedidoController::class, 'descargarFactura']);
+Route::get('/pedidos', [PedidoController::class, 'index']);
 // Productos (CRUD completo)
 Route::get('/productos', [ProductoController::class, 'index']);
 Route::get('/productos/destacados', [ProductoController::class, 'destacados']);

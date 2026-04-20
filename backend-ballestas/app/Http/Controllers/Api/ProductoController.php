@@ -26,10 +26,14 @@ class ProductoController extends Controller
     #[OA\Parameter(name: "id", in: "path", required: true, description: "ID del producto")]
     #[OA\Response(response: 200, description: "Operación exitosa")]
     #[OA\Response(response: 404, description: "Producto no encontrado")]
-    public function show($id)
-    {
+    public function show($id) {
+        
         $producto = Producto::with(['categoria', 'marca'])->find($id);
-        if (!$producto) return response()->json(['message' => 'Producto no encontrado'], 404);
+        
+        if (!$producto) {
+            return response()->json(['message' => 'Producto no encontrado'], 404);
+        }
+        
         return response()->json($producto, 200);
     }
 
