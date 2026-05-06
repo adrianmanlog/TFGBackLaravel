@@ -15,12 +15,12 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
-    // 3. Campos que se pueden llenar
     protected $fillable = [
         'nombre',
         'email',
         'password',
         'es_admin',
+        'google2fa_secret',
     ];
 
     protected $hidden = [

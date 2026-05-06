@@ -70,4 +70,46 @@ class ProductoController extends Controller
         $producto->delete();
         return response()->json(['message' => 'Producto eliminado correctamente'], 200);
     }
+    #[OA\Post(path: "/api/productos/importar", summary: "Importar productos masivamente desde CSV", tags: ["Productos"])]
+    #[OA\Response(response: 201, description: "Productos importados")]
+    public function importar(Request $request)
+    {
+        $request->validate([
+            'archivo' => 'required|mimes:csv,txt|max:2048'
+        ]);
+
+        $file = $request->file('archivo');
+        $handle = fopen($file->getPathname(), "r");
+
+        $header = true;
+        $count = 0;
+
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            if ($header) {
+                $header = false;
+                continue;
+            }
+
+            if (count($data) == 1) {
+                $data = explode(';', $data[0]);
+            }
+
+            Producto::create([
+                'nombre'       => $data[0] ?? 'Producto sin nombre',
+                'categoria_id' => $data[1] ?? 1,
+                'marca_id'     => $data[2] ?? 1,
+                'precio'       => isset($data[3]) ? (float) str_replace(',', '.', $data[3]) : 0,
+                'stock'        => $data[4] ?? 0,
+                'imagen_url'   => $data[5] ?? '',
+                'descripcion'  => $data[6] ?? '',
+                'destacado'    => false
+            ]);
+
+            $count++;
+        }
+
+        fclose($handle);
+
+        return response()->json(['message' => "$count productos importados con éxito"], 201);
+    }
 }

@@ -18,7 +18,7 @@ Route::post('/marcas', [MarcaController::class, 'store']); // <-- NUEVA
 Route::get('/usuarios/{id}/pedidos', [PedidoController::class, 'misPedidos']);
 Route::get('/pedidos/{id}/factura', [PedidoController::class, 'descargarFactura']);
 Route::get('/pedidos', [PedidoController::class, 'index']);
-
+Route::post('/productos/importar', [ProductoController::class, 'importar']);
 Route::get('/productos', [ProductoController::class, 'index']);
 Route::get('/productos/destacados', [ProductoController::class, 'destacados']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
