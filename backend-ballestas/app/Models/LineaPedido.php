@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 
 class LineaPedido extends Model
@@ -8,8 +10,8 @@ class LineaPedido extends Model
     public $timestamps = false;
     protected $fillable = ['pedido_id', 'producto_id', 'cantidad', 'precio_unitario'];
 
-    // ¡AÑADIR ESTO! Relación con el producto
-    public function producto() {
+    public function producto()
+    {
         return $this->belongsTo(Producto::class, 'producto_id');
     }
 }

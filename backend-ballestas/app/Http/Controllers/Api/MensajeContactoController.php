@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -12,7 +13,6 @@ class MensajeContactoController extends Controller
     #[OA\Response(response: 201, description: "Mensaje enviado correctamente")]
     public function store(Request $request)
     {
-        // Validamos que nos manden lo necesario
         $request->validate([
             'nombre_cliente' => 'required|string|max:150',
             'telefono' => 'required|string|max:20',
@@ -20,7 +20,7 @@ class MensajeContactoController extends Controller
         ]);
 
         $mensaje = MensajeContacto::create($request->all());
-        
+
         return response()->json(['message' => 'Mensaje recibido con éxito', 'data' => $mensaje], 201);
     }
 

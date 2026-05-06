@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -26,14 +27,15 @@ class ProductoController extends Controller
     #[OA\Parameter(name: "id", in: "path", required: true, description: "ID del producto")]
     #[OA\Response(response: 200, description: "Operación exitosa")]
     #[OA\Response(response: 404, description: "Producto no encontrado")]
-    public function show($id) {
-        
+    public function show($id)
+    {
+
         $producto = Producto::with(['categoria', 'marca'])->find($id);
-        
+
         if (!$producto) {
             return response()->json(['message' => 'Producto no encontrado'], 404);
         }
-        
+
         return response()->json($producto, 200);
     }
 
@@ -41,7 +43,6 @@ class ProductoController extends Controller
     #[OA\Response(response: 201, description: "Producto creado")]
     public function store(Request $request)
     {
-        // En un futuro, esto se protegerá solo para el Admin
         $producto = Producto::create($request->all());
         return response()->json($producto, 201);
     }
@@ -53,7 +54,7 @@ class ProductoController extends Controller
     {
         $producto = Producto::find($id);
         if (!$producto) return response()->json(['message' => 'Producto no encontrado'], 404);
-        
+
         $producto->update($request->all());
         return response()->json($producto, 200);
     }
@@ -65,7 +66,7 @@ class ProductoController extends Controller
     {
         $producto = Producto::find($id);
         if (!$producto) return response()->json(['message' => 'Producto no encontrado'], 404);
-        
+
         $producto->delete();
         return response()->json(['message' => 'Producto eliminado correctamente'], 200);
     }

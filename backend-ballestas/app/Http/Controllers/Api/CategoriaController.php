@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -15,9 +16,10 @@ class CategoriaController extends Controller
         return response()->json(Categoria::all(), 200);
     }
 
-    public function store(Request $request) {
-    $request->validate(['nombre' => 'required|string|max:100']);
-    $categoria = Categoria::create($request->all());
-    return response()->json($categoria, 201);
-}
+    public function store(Request $request)
+    {
+        $request->validate(['nombre' => 'required|string|max:100']);
+        $categoria = Categoria::create($request->all());
+        return response()->json($categoria, 201);
+    }
 }
