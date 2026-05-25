@@ -52,7 +52,7 @@ Route::post('/contacto', function (Request $request) {
         "Mensaje:\n" . $request->mensaje;
 
     Mail::raw($contenido, function ($message) {
-        $message->to('tu_correo@gmail.com') // <--- PON TU CORREO AQUÍ
+        $message->to('adriangalileaa@gmail.com')
             ->subject('Nuevo mensaje desde la web de Ballestas Beni');
     });
 
