@@ -10,11 +10,11 @@ use App\Http\Controllers\Api\PedidoController;
 
 
 Route::get('/categorias', [CategoriaController::class, 'index']);
-Route::post('/categorias', [CategoriaController::class, 'store']); // <-- NUEVA
+Route::post('/categorias', [CategoriaController::class, 'store']);
 
 Route::post('/procesar-pago', [PedidoController::class, 'procesarPago']);
 Route::get('/marcas', [MarcaController::class, 'index']);
-Route::post('/marcas', [MarcaController::class, 'store']); // <-- NUEVA
+Route::post('/marcas', [MarcaController::class, 'store']);
 Route::get('/usuarios/{id}/pedidos', [PedidoController::class, 'misPedidos']);
 Route::get('/pedidos/{id}/factura', [PedidoController::class, 'descargarFactura']);
 Route::get('/pedidos', [PedidoController::class, 'index']);
@@ -34,4 +34,27 @@ Route::post('/registro', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
+
+Route::post('/contacto', function (Request $request) {
+    $request->validate([
+        'nombre' => 'required|string|max:100',
+        'telefono' => 'required|string|max:20',
+        'mensaje' => 'required|string'
+    ]);
+
+    $contenido = "Has recibido un nuevo mensaje de contacto:\n\n" .
+        "Nombre: " . $request->nombre . "\n" .
+        "Teléfono: " . $request->telefono . "\n" .
+        "Mensaje:\n" . $request->mensaje;
+
+    Mail::raw($contenido, function ($message) {
+        $message->to('tu_correo@gmail.com') // <--- PON TU CORREO AQUÍ
+            ->subject('Nuevo mensaje desde la web de Ballestas Beni');
+    });
+
+    return response()->json(['message' => 'Correo enviado']);
 });
