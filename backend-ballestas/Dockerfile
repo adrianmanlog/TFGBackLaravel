@@ -1,5 +1,5 @@
 # Usamos una imagen oficial de PHP súper ligera
-FROM php:8.2-cli
+FROM php:8.4-cli
 
 # Instalamos las herramientas necesarias y la extensión de PostgreSQL
 RUN apt-get update && apt-get install -y libpq-dev zip unzip \
