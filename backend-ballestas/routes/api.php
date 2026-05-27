@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\MarcaController;
 use App\Http\Controllers\Api\MensajeContactoController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PedidoController;
-
+use App\Http\Controllers\Api\DashboardController;
 
 Route::get('/categorias', [CategoriaController::class, 'index']);
 Route::post('/categorias', [CategoriaController::class, 'store']);
@@ -25,7 +25,7 @@ Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::post('/productos', [ProductoController::class, 'store']);
 Route::put('/productos/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/{id}', [ProductoController::class, 'destroy']);
-
+Route::get('/admin/dashboard-stats', [DashboardController::class, 'stats']);
 Route::put('/categorias/{id}', [CategoriaController::class, 'update']);
 Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy']);
 
