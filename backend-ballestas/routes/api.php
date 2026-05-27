@@ -8,7 +8,10 @@ use App\Http\Controllers\Api\MensajeContactoController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PedidoController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\AsistenteController;
 
+
+Route::post('/chat-ia', [AsistenteController::class, 'chat']);
 Route::get('/categorias', [CategoriaController::class, 'index']);
 Route::post('/categorias', [CategoriaController::class, 'store']);
 
@@ -29,7 +32,7 @@ Route::get('/admin/dashboard-stats', [DashboardController::class, 'stats']);
 Route::put('/categorias/{id}', [CategoriaController::class, 'update']);
 Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy']);
 
-
+Route::post('/chat-ia', [AsistenteController::class, 'chat']);
 Route::put('/marcas/{id}', [MarcaController::class, 'update']);
 Route::delete('/marcas/{id}', [MarcaController::class, 'destroy']);
 
