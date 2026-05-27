@@ -22,4 +22,29 @@ class CategoriaController extends Controller
         $categoria = Categoria::create($request->all());
         return response()->json($categoria, 201);
     }
+
+    #[OA\Put(path: "/api/categorias/{id}", summary: "Actualiza una categoría existente", tags: ["Categorías"])]
+    #[OA\Parameter(name: "id", in: "path", required: true, description: "ID de la categoría")]
+    #[OA\Response(response: 200, description: "Categoría actualizada")]
+    public function update(Request $request, $id)
+    {
+        $categoria = Categoria::find($id);
+        if (!$categoria) return response()->json(['message' => 'Categoría no encontrada'], 404);
+
+        $request->validate(['nombre' => 'required|string|max:100']);
+        $categoria->update($request->all());
+        return response()->json($categoria, 200);
+    }
+
+    #[OA\Delete(path: "/api/categorias/{id}", summary: "Borra una categoría", tags: ["Categorías"])]
+    #[OA\Parameter(name: "id", in: "path", required: true, description: "ID de la categoría")]
+    #[OA\Response(response: 200, description: "Categoría eliminada")]
+    public function destroy($id)
+    {
+        $categoria = Categoria::find($id);
+        if (!$categoria) return response()->json(['message' => 'Categoría no encontrada'], 404);
+
+        $categoria->delete();
+        return response()->json(['message' => 'Categoría eliminada correctamente'], 200);
+    }
 }
